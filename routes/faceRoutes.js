@@ -1,5 +1,6 @@
 var faceRecognizeController = require('../controllers/faceRecognizeController');
 var faceDetectController = require('../controllers/faceDetectController');
+var textRecognizeController = require('../controllers/textRecognizeController');
 var logger = require('../logger/index').logger;
 var logStr = 'CloudComputeEngine';
 
@@ -34,6 +35,21 @@ module.exports = function (app) {
             }
         },
         faceRecognizeController.processImage);
+        
+        app.post('/text/recognize',
+        function (req, res, next) {
+            logger.debug(" ===================================== text recognition =====================================");
+            logger.debug("Request Body : ", req.body);
+            logger.debug(" ==========================================================================================");
+            if (req.body) {
+                next();
+            }
+            else {
+                logger.error("Invalid Inputs");
+                res.send({ 'result': 'Invalid Inputs!' });
+            }
+        },
+        textRecognizeController.processImage);
 
 }
 
